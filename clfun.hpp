@@ -1,3 +1,16 @@
+//=============================================================================
+//
+// Author: safesky - safesky@163.com
+//
+// Copyright: safesky
+//
+// Last modified: 2015-05-06 17:05
+//
+// Filename: clfun.hpp
+//
+// Description: 
+//
+//=============================================================================
 #ifndef		_CLFUN_HPP_
 #define 	_CLFUN_HPP_
 
