@@ -4,9 +4,9 @@
 //
 // Copyright: safesky
 //
-// Last modified: 2015-05-06 16:00
+// Last modified:	2015-05-12 13:33
 //
-// Filename: cslinklist.h
+// Filename:		cslinklist.h
 //
 // Description: 
 //
@@ -212,9 +212,3 @@ void CSLinklist<numType>::Clear() {
 }
 
 #endif /* _CSLINKLIST_H */
-
-
-
-
-
-

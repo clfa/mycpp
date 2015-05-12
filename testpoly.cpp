@@ -4,9 +4,9 @@
 //
 // Copyright: safesky
 //
-// Last modified: 2015-05-06 15:56
+// Last modified:	2015-05-12 13:35
 //
-// Filename: testpoly.cpp
+// Filename:		testpoly.cpp
 //
 // Description: 
 //
@@ -69,5 +69,14 @@ int main(void) {
         cout<<"多项式A乘以e3结果为："<<endl;
         LA.PolyNodeMultiply( e3 );
         LA.Display();
+
+        Poly LD = LA;
+        cout<<"将LA赋值给LD："<<endl;
+        LD.Display();
+        cout<<"清除LD内容"<<endl;
+        LD.Clear();
+        cout<<"LA内容为："<<endl;
+        LA.Display();
+        
         return 0;
 }

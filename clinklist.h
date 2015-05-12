@@ -4,9 +4,9 @@
 //
 // Copyright: safesky
 //
-// Last modified: 2015-05-06 16:00
+// Last modified:	2015-05-12 13:33
 //
-// Filename: clinklist.h
+// Filename:		clinklist.h
 //
 // Description: 
 //
@@ -19,7 +19,6 @@ using std::cout;
 using std::cin;
 using std::endl;
 
-/*===========================================CLinkList===========================================*/
 template<class Ty>
 struct LNode {
         Ty data;

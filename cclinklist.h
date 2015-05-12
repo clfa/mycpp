@@ -4,9 +4,9 @@
 //
 // Copyright: safesky
 //
-// Last modified: 2015-05-06 15:53
+// Last modified:	2015-05-12 13:33
 //
-// Filename: cclinklist.h
+// Filename:		cclinklist.h
 //
 // Description: 
 //
@@ -187,16 +187,3 @@ void CCLinklist<Numtype>::Display() {
         }
         cout<<endl;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

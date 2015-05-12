@@ -4,9 +4,9 @@
 //
 // Copyright: safesky
 //
-// Last modified: 2015-05-06 15:55
+// Last modified:	2015-05-12 13:36
 //
-// Filename: Poly.hpp
+// Filename:		Poly.hpp
 //
 // Description: 
 //
@@ -40,6 +40,7 @@ public:
         Poly();                 // 构造函数，建立空多项式
         ~Poly();                // 析构函数，释放内存
         Poly( const Poly& P );  // 复制构造函数
+        Poly& operator=( const Poly& P ); // 重载赋值运算符
         void Create( PolyArray a, int n); // 键盘输入，创建多项式链表
         void Display();                    // 显示多项式
         void Sort();                       // 有序表排序
@@ -49,9 +50,14 @@ public:
         void Add( Poly& LB );           // 多项式加法
         void Substract( Poly& LB );     // 多项式减法
         void Multiply( Poly LB );       // 多项式乘法
-        void Clear();                   // 清除链表所有元素
+        void Clear();                   // 清除多项式所有元素
 private:
         PolyNode* head;         // 头指针
 };
 
 #endif  // end of _POLY_HPP
+
+
+
+
+

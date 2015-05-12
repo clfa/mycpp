@@ -4,9 +4,9 @@
 //
 // Copyright: safesky
 //
-// Last modified: 2015-05-06 15:55
+// Last modified:	2015-05-12 13:34
 //
-// Filename: Poly.cpp
+// Filename:		Poly.cpp
 //
 // Description: 
 //
@@ -42,7 +42,20 @@ Poly::Poly( const Poly& P ) {   // 复制构造函数
         }
 }
 
-void Poly::Create( PolyArray a, int n) { // 从多项式数组取值创建多项式链表
+Poly& Poly::operator=( const Poly& P ) { // 赋值运算符重载函数
+        Clear();
+        PolyNode* s = head;
+        PolyNode* t = P.head->next;
+        while( t ) {
+                PolyNode* m = new PolyNode;
+                m->coef = t->coef; m->exp = t->exp;
+                m->next = s->next; s->next = m; m->prior = s;
+                t = t->next; s = s->next;
+        }
+        return *this;
+}
+
+void Poly::Create( PolyArray a, int n) { // 从多项式数组取值创建多项式多项式
         PolyNode* p = head;
         int i=0;
         while( i<n) {
@@ -54,8 +67,8 @@ void Poly::Create( PolyArray a, int n) { // 从多项式数组取值创建多项
         }
 }
 
-void Poly::Display() {          // 显示链表元素
-        if( !head->next ) {     // 首先判断链表是否为空
+void Poly::Display() {          // 显示多项式元素
+        if( !head->next ) {     // 首先判断多项式是否为空
                 cout<<"Empty poly list, nothing to show."<<endl;
                 return;
         }
@@ -71,7 +84,7 @@ void Poly::Display() {          // 显示链表元素
         cout<<endl;
 }
 
-void Poly::Sort() { // 对链表按照指数大小升序排列，此方法很巧妙，为之点赞
+void Poly::Sort() { // 对多项式按照指数大小升序排列，此方法很巧妙，为之点赞
         PolyNode* p, *q, *r;
         p = head->next;
         if( p ) {
@@ -90,24 +103,24 @@ void Poly::Sort() { // 对链表按照指数大小升序排列，此方法很巧
         }
 }
 
-void Poly::PolyNodeAdd( PolyNode elem ) { // 添加元素到链表
+void Poly::PolyNodeAdd( PolyNode elem ) { // 添加元素到多项式
         PolyNode* P, *Q;
         P = head;
         Q = P->next;
         while( Q ) {
-                if( Q->exp < elem.exp ) { // 元素的指数大于当前项指数，继续往下遍历链表
+                if( Q->exp < elem.exp ) { // 元素的指数大于当前项指数，继续往下遍历多项式
                         P = Q; Q = Q->next;
                 }
                 else if( Q->exp==elem.exp ) {
                         Q->coef += elem.coef;
-                        if( fabs(Q->coef)<cfPre ) { // 对应元素相加系数和为0，从链表中删除此元素
+                        if( fabs(Q->coef)<cfPre ) { // 对应元素相加系数和为0，从多项式中删除此元素
                                 P->next = Q->next;
                                 delete  Q;
                                 if( P->next ) P->next->prior = P;
                         }
                         return;
                 }
-                else {          // 元素的指数比链表当前项的小，拷贝元素，加入新节点
+                else {          // 元素的指数比多项式当前项的小，拷贝元素，加入新节点
                         PolyNode* pnAdd = new PolyNode;
                         pnAdd->coef = elem.coef;
                         pnAdd->exp = elem.exp;
@@ -117,7 +130,7 @@ void Poly::PolyNodeAdd( PolyNode elem ) { // 添加元素到链表
                         return;
                 }
         }
-        // 为找到同幂的项，将元素直接加入链表最后
+        // 为找到同幂的项，将元素直接加入多项式最后
         PolyNode* pnAdd = new PolyNode;
         pnAdd->coef = elem.coef;
         pnAdd->exp = elem.exp;
@@ -125,14 +138,14 @@ void Poly::PolyNodeAdd( PolyNode elem ) { // 添加元素到链表
         P->next = pnAdd;
 }
 
-void Poly::PolyNodeSubstract( PolyNode elem) { // 添加元素的取负系数项到链表
+void Poly::PolyNodeSubstract( PolyNode elem) { // 添加元素的取负系数项到多项式
         PolyNode temp;
         temp.coef = -elem.coef;
-        temp.exp = elem.exp; // 链表与元素减法，将元素系数取负值，再执行加法运算即可
+        temp.exp = elem.exp; // 多项式与元素减法，将元素系数取负值，再执行加法运算即可
         PolyNodeAdd( temp );
 }
 
-void Poly::PolyNodeMultiply( PolyNode elem ) {
+void Poly::PolyNodeMultiply( PolyNode elem ) {  //元素与多项式乘
         if( fabs( elem.coef )<cfPre ) return;
         PolyNode* p = head->next;
         while( p ) {
@@ -142,8 +155,8 @@ void Poly::PolyNodeMultiply( PolyNode elem ) {
         }
 }
 
-void Poly::Add( Poly& LB ) {         // 执行链表与链表的加法
-        if( !LB.head->next ) return; // 若LB为空链表则退出
+void Poly::Add( Poly& LB ) {         // 执行多项式与多项式的加法
+        if( !LB.head->next ) return; // 若LB为空多项式则退出
         float fSum;
         PolyNode* pa, * pb, * qa, * qb;
         pa = head;
@@ -152,18 +165,18 @@ void Poly::Add( Poly& LB ) {         // 执行链表与链表的加法
         qb = pb->next;
         while( qa && qb ) {     // 两表都非空
                 //cout<<"==A: "; Display(); cout<<"==B: "; LB.Display();
-                if( qa->exp < qb->exp ) { // 链表当前第一项指数比链表LB的小，
+                if( qa->exp < qb->exp ) { // 多项式当前第一项指数比多项式LB的小，
                         pa = qa; qa = qa->next;
                 }
-                else if( qa->exp > qb->exp ) { // 链表当前项比LB的大，将LB中的该项加入到链表中来
-                        pb->next = qb->next; // 将LB的当前项与链表分隔开，
+                else if( qa->exp > qb->exp ) { // 多项式当前项比LB的大，将LB中的该项加入到多项式中来
+                        pb->next = qb->next; // 将LB的当前项与多项式分隔开，
                         qb->next = qa;
-                        pa->next = qb; // 将LB的当前项插入到链表中
+                        pa->next = qb; // 将LB的当前项插入到多项式中
                         qb->prior = pa; qa->prior = qb; if( pb->next ) pb->next->prior = pb;
-                        pa = qb; // 链表的pa指向新加入的项，而qa位置未变
+                        pa = qb; // 多项式的pa指向新加入的项，而qa位置未变
                         qb = pb->next; // qb位置重新设定未之前的下一个
                 }
-                else {          // 两链表当前项指数相同
+                else {          // 两多项式当前项指数相同
                         fSum = qa->coef + qb->coef; // 各自系数相加
                         if( fabs( fSum )<cfPre ) { // 系数之和为零
                                 pa->next = qa->next; // 删除qa
@@ -185,15 +198,15 @@ void Poly::Add( Poly& LB ) {         // 执行链表与链表的加法
                         }
                 }
         } /* end of while*/
-        if( qb ) { // qb非空，说明其起始指数比链表的最大指数项的指数都大，直接到到链表最后即可
+        if( qb ) { // qb非空，说明其起始指数比多项式的最大指数项的指数都大，直接到到多项式最后即可
                 pa->next = qb;
                 qb->prior = pa;
                 pb->next = NULL;
         }
 }
 
-void Poly::Substract( Poly& LB ) {   // 链表与链表的减法
-        if( !LB.head->next ) return; // 若LB为空链表则退出
+void Poly::Substract( Poly& LB ) {   // 多项式与多项式的减法
+        if( !LB.head->next ) return; // 若LB为空多项式则退出
         float fDiff;
         PolyNode* pa, * pb, * qa, * qb;
         pa = head;
@@ -201,18 +214,18 @@ void Poly::Substract( Poly& LB ) {   // 链表与链表的减法
         pb = LB.head;
         qb = pb->next;
         while( qa && qb ) {     // 两表都非空
-                if( qa->exp < qb->exp ) { // 链表当前第一项指数比链表LB的小，
+                if( qa->exp < qb->exp ) { // 多项式当前第一项指数比多项式LB的小，
                         pa = qa; qa = qa->next;
                 }
-                else if( qa->exp > qb->exp ) { // 链表当前项比LB的大，将LB中的该项加入到链表中来
-                        pb->next = qb->next; // 将LB的当前项与链表分隔开，
+                else if( qa->exp > qb->exp ) { // 多项式当前项比LB的大，将LB中的该项加入到多项式中来
+                        pb->next = qb->next; // 将LB的当前项与多项式分隔开，
                         qb->next = qa;
-                        pa->next = qb; // 将LB的当前项插入到链表中
+                        pa->next = qb; // 将LB的当前项插入到多项式中
                         qb->prior = pa; qa->prior = qb; if( pb->next ) pb->next->prior = pb;
-                        pa = qb; // 链表的pa指向新加入的项，而qa位置未变
+                        pa = qb; // 多项式的pa指向新加入的项，而qa位置未变
                         qb = pb->next; // qb位置重新设定未之前的下一个
                 }
-                else {          // 两链表当前项指数相同
+                else {          // 两多项式当前项指数相同
                         fDiff = qa->coef - qb->coef; // 各自系数相加
                         if( fabs( fDiff )<cfPre ) { // 系数之和为零
                                 pa->next = qa->next; // 删除qa
@@ -234,35 +247,35 @@ void Poly::Substract( Poly& LB ) {   // 链表与链表的减法
                         }
                 }
         } /* end of while*/
-        if( qb ) { // qb非空，说明其起始指数比链表的最大指数项的指数都大，直接到到链表最后即可
+        if( qb ) { // qb非空，说明其起始指数比多项式的最大指数项的指数都大，直接到到多项式最后即可
                 pa->next = qb;
                 qb->prior = pa;
                 pb->next = NULL;
         }
 }
 
-void Poly::Multiply( Poly LB ) { // 链表与链表相乘
+void Poly::Multiply( Poly LB ) { // 多项式与多项式相乘
         if( !LB.head->next )
                 return;         // LB为空，则退出
 
-        Poly totRes ;             // 最后的各子链表之和
+        Poly totRes ;             // 最后的各子多项式之和
         PolyNode* p = head->next; // 遍历LB的工作指针
         while( p ) {              // 遍历LB
                 Poly lbTemp( LB );
                 PolyNode e;
                 e.coef = p->coef; e.exp = p->exp;
                 lbTemp.PolyNodeMultiply( e ); //lbTemp.Display();
-                totRes.Add( lbTemp ); // 再将temp每次都加到最后的总链表中去
+                totRes.Add( lbTemp ); // 再将temp每次都加到最后的总多项式中去
                 p = p->next;
         }
-        Clear();                // 清除当前链表
+        Clear();                // 清除当前多项式
         p = totRes.head->next;
         head->next = p;
         totRes.head->next = NULL;
         p->prior = head;
 }
 
-void Poly::Clear() {         // 清除链表除头结点外的所有节点
+void Poly::Clear() {         // 清除多项式除头结点外的所有节点
         PolyNode* p = head;
         while( head->next )  {
                 p = head->next->next;

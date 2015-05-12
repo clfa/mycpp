@@ -4,9 +4,9 @@
 //
 // Copyright: safesky
 //
-// Last modified: 2015-05-06 17:05
+// Last modified:	2015-05-12 13:36
 //
-// Filename: clfun.hpp
+// Filename:		clfun.hpp
 //
 // Description: 
 //
@@ -19,18 +19,18 @@
 //（H I J K L M N）
 //（O P Q R S T）
 //（U V W X Y Z）
-#define FORMAT_PRINT_ARRAY_1D(ARRAY, N, FS)     \
-        int iPT=0;                              \
-        int iPC=10;                                \
-        for(int i=0; i<N; i++) {                \
-                iPT++;                            \
-                if( 1==iPT ) cout<<"( ";        \
-                cout<<ARRAY[i];                    \
-                if( iPT<iPC && i!=N-1 ) cout<<FS;\
-                if( iPT==iPC ) {                \
-                        cout<<" )"<<endl;        \
-                        iPT = 0;                \
-                }                                \
+#define FORMAT_PRINT_ARRAY_1D(ARRAY, N, FS)                 \
+        int iPT=0;                                          \
+        int iPC=10;                                         \
+        for(int i=0; i<N; i++) {                            \
+                iPT++;                                      \
+                if( 1==iPT ) cout<<"( ";                    \
+                cout<<ARRAY[i];                             \
+                if( iPT<iPC && i!=N-1 ) cout<<FS;           \
+                if( iPT==iPC ) {                            \
+                        cout<<" )"<<endl;                   \
+                        iPT = 0;                            \
+                }                                           \
                 if( 0!=N%iPC && i==N-1 ) cout<<" )"<<endl;  \
         }                                                   \
 
